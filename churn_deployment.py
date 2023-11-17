@@ -67,19 +67,15 @@ input_data_categorical['PaperlessBilling'] = input_data_categorical['PaperlessBi
 input_data_categorical['PaymentMethod'] = input_data_categorical['PaymentMethod'].apply(lambda x: 0 if 'Bank transfer (automatic)' == 'Credit card (automatic)' else 1)
 
 scaler_1 = StandardScaler()
-numerical_scaled = scaler_1.transform(numerical)
-numerical = pd.DataFrame(numerical_scaled, columns=numerical.columns)
+numerical_scaled = scaler_1.transform(input_data)
+numerical = pd.DataFrame(numerical_scaled, columns=input_data.columns)
 
-# Now, scale the input_data using the same scaler
-scaled_input_data = scaler_1.transform(input_data[numerical.columns])
 
-scaled_input_data = scaler.transform(input_data)
-scaled = pd.DataFrame(scaled_input_data, input_data.columns)
 
 sc = input_data_categorical["SeniorCitizen"]
 input_data_categorical.drop("SeniorCitizen", axis =1, inplace = True)
 
-final_data = pd.concat([sc,scaled_input_data, input_data_categorical])
+final_data = pd.concat([sc,numerical, input_data_categorical])
 
 if st.button('Predict'):
     prediction = model.predict(final_data)
