@@ -3,8 +3,8 @@ import pickle
 import pandas as pd
 
 # Load the model
-with open('mlp_model.h5', 'rb') as model_file:
-    model = pickle.load(model_file)
+with open('mlp_model.h5', 'rb') as model_filename:
+    model = pickle.load(model_filename)
 
 # Load the scaler
 with open('scaler.pkl', 'rb') as scaler_file:
