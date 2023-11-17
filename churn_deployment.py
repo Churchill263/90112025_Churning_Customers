@@ -56,6 +56,13 @@ input_data = pd.DataFrame({
 encoded_input_data = input_data.copy()
 encoded_input_data['Partner'] = encoded_input_data['Partner'].apply(lambda x: 1 if x == 'Yes' else 0)
 encoded_input_data['Dependents'] = encoded_input_data['Dependents'].apply(lambda x: 1 if x == 'Yes' else 0)
+encoded_input_data['OnlineSecurity'] = input_data['OnlineSecurity'].apply(lambda x: 1 if x == 'Yes' else 0)
+encoded_input_data['OnlineBackup'] = input_data['OnlineBackup'].apply(lambda x: 1 if x == 'Yes' else 0)
+encoded_input_data['DeviceProtection'] = input_data['DeviceProtection'].apply(lambda x: 1 if x == 'Yes' else 0)
+encoded_input_data['TechSupport'] = input_data['TechSupport'].apply(lambda x: 1 if x == 'Yes' else 0)
+encoded_input_data['Contract'] = input_data['Contract'].apply(lambda x: 1 if x == 'Yes' else 0)
+encoded_input_data['PaperlessBilling'] = input_data['PaperlessBilling'].apply(lambda x: 1 if x == 'Yes' else 0)
+encoded_input_data['PaymentMethod'] = input_data['PaymentMethod'].apply(lambda x: 1 if x == 'Yes' else 0)
 
 
 
