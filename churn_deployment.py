@@ -72,7 +72,7 @@ numerical_scaled = scaler["scaler"].transform(input_data)
 numerical = pd.DataFrame(numerical_scaled, columns=input_data.columns)
 
 
-final_data = pd.concat([numerical, input_data_categorical])
+final_data = pd.concat([numerical, input_data_categorical], axis =1)
 
 if st.button('Predict'):
     prediction = model.predict(final_data)
