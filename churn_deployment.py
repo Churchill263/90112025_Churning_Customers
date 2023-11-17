@@ -67,7 +67,7 @@ input_data_categorical['PaperlessBilling'] = input_data_categorical['PaperlessBi
 input_data_categorical['PaymentMethod'] = input_data_categorical['PaymentMethod'].apply(lambda x: 0 if 'Bank transfer (automatic)' == 'Credit card (automatic)' else 1)
 
 scaler_1 = StandardScaler()
-numerical_scaled = scaler_1.fit_transform(numerical)
+numerical_scaled = scaler_1.transform(numerical)
 numerical = pd.DataFrame(numerical_scaled, columns=numerical.columns)
 
 # Now, scale the input_data using the same scaler
