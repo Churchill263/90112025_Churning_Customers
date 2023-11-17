@@ -3,11 +3,11 @@ import pickle
 import pandas as pd
 
 # Load the model
-with open('churn_model.pkl', 'rb') as model_file:
+with open('mlp_model.h5', 'rb') as model_file:
     model = pickle.load(model_file)
 
 # Load the scaler
-with open('Churn_scaler.pkl', 'rb') as scaler_file:
+with open('scaler.pkl', 'rb') as scaler_file:
     scaler = pickle.load(scaler_file)
 
 st.title('Churn Prediction App')
