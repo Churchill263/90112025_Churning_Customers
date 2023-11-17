@@ -1,10 +1,10 @@
 import streamlit as st
 import pickle
 import pandas as pd
+import tensorflow as tf
 
 # Load the model
-with open('mlp_model.h5', 'rb') as model_filename:
-    model = pickle.load(model_filename)
+model =tf.keras.models.load_model("mlp_model.h5")
 
 # Load the scaler
 with open('scaler.pkl', 'rb') as scaler_file:
