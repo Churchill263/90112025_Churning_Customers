@@ -73,7 +73,7 @@ numerical = pd.DataFrame(numerical_scaled, columns=numerical.columns)
 # Now, scale the input_data using the same scaler
 scaled_input_data = scaler_1.transform(input_data[numerical.columns])
 
-scaled_input_data = scaler_1.transform(input_data)
+scaled_input_data = scaler.transform(input_data)
 scaled = pd.DataFrame(scaled_input_data, input_data.columns)
 
 sc = input_data_categorical["SeniorCitizen"]
