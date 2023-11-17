@@ -36,10 +36,13 @@ payment_method = st.sidebar.selectbox('Payment Method', ['Electronic check', 'Ma
 # Add more input features as needed
 
 input_data = pd.DataFrame({
-    'SeniorCitizen': [senior_citizen],
-    'Tenure': [tenure],
+    'tenure': [tenure],
     'MonthlyCharges': [monthly_charges],
     'TotalCharges': [total_charges],
+})
+
+input_data_categorical = pd.DataFrame({
+    'SeniorCitizen': [senior_citizen],
     'Partner': [partner],
     'Dependents': [dependents],
     'OnlineSecurity': [online_security],
@@ -49,27 +52,29 @@ input_data = pd.DataFrame({
     'Contract': [contract],
     'PaperlessBilling': [paperless_billing],
     'PaymentMethod': [payment_method],
-    
 })
 
 
-encoded_input_data = input_data.copy()
-encoded_input_data['Partner'] = encoded_input_data['Partner'].apply(lambda x: 1 if x == 'Yes' else 0)
-encoded_input_data['Dependents'] = encoded_input_data['Dependents'].apply(lambda x: 1 if x == 'Yes' else 0)
-encoded_input_data['OnlineSecurity'] = input_data['OnlineSecurity'].apply(lambda x: 1 if x == 'Yes' else 0)
-encoded_input_data['OnlineBackup'] = input_data['OnlineBackup'].apply(lambda x: 1 if x == 'Yes' else 0)
-encoded_input_data['DeviceProtection'] = input_data['DeviceProtection'].apply(lambda x: 1 if x == 'Yes' else 0)
-encoded_input_data['TechSupport'] = input_data['TechSupport'].apply(lambda x: 1 if x == 'Yes' else 0)
-encoded_input_data['Contract'] = input_data['Contract'].apply(lambda x: 1 if x == 'Yes' else 0)
-encoded_input_data['PaperlessBilling'] = input_data['PaperlessBilling'].apply(lambda x: 1 if x == 'Yes' else 0)
-encoded_input_data['PaymentMethod'] = input_data['PaymentMethod'].apply(lambda x: 1 if x == 'Yes' else 0)
+input_data_categorical['Partner'] = encoded_input_data['Partner'].apply(lambda x: 1 if x == 'Yes' else 0)
+input_data_categorical['Dependents'] = encoded_input_data['Dependents'].apply(lambda x: 1 if x == 'Yes' else 0)
+input_data_categorical['OnlineSecurity'] = input_data['OnlineSecurity'].apply(lambda x: 1 if x == 'Yes' else 0)
+input_data_categorical['OnlineBackup'] = input_data['OnlineBackup'].apply(lambda x: 1 if x == 'Yes' else 0)
+input_data_categorical['DeviceProtection'] = input_data['DeviceProtection'].apply(lambda x: 1 if x == 'Yes' else 0)
+input_data_categorical['TechSupport'] = input_data['TechSupport'].apply(lambda x: 1 if x == 'Yes' else 0)
+input_data_categorical['Contract'] = input_data['Contract'].apply(lambda x: 0 if 'Month-to-month' == 'One year' else 1)
+input_data_categorical['PaperlessBilling'] = input_data['PaperlessBilling'].apply(lambda x: 1 if x == 'Yes' else 0)
+input_data_categorical['PaymentMethod'] = input_data['PaymentMethod'].apply(lambda x: 0 if 'Bank transfer (automatic)' == 'Credit card (automatic)' else 1)
 
+scaled_input_data = scaler.transform(input_data)
+scaled = pd.DataFrame(scaled_input_data, input_data.columns)
 
+sc = input_data_categorical["SeniorCitizen"]
+input_data_categorical.drop("SeniorCitizen", axis =1, inplace = True)
 
-scaled_input_data = scaler.transform(encoded_input_data)
+final_data = pd.concat([sc,scaled_input_data, input_data_categorical])
 
 if st.button('Predict'):
-    prediction = model.predict(scaled_input_data)
+    prediction = model.predict(final_data)
 
     st.subheader('Prediction')
     st.write('Churn: Yes' if prediction[0] == 1 else 'Churn: No')
