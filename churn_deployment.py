@@ -37,13 +37,14 @@ payment_method = st.sidebar.selectbox('Payment Method', ['Electronic check', 'Ma
 # Add more input features as needed
 
 input_data = pd.DataFrame({
+    'SeniorCitizen': [senior_citizen],
     'tenure': [tenure],
     'MonthlyCharges': [monthly_charges],
     'TotalCharges': [total_charges],
 })
 
 input_data_categorical = pd.DataFrame({
-    'SeniorCitizen': [senior_citizen],
+    
     'Partner': [partner],
     'Dependents': [dependents],
     'OnlineSecurity': [online_security],
@@ -71,11 +72,7 @@ numerical_scaled = scaler_1.transform(input_data)
 numerical = pd.DataFrame(numerical_scaled, columns=input_data.columns)
 
 
-
-sc = input_data_categorical["SeniorCitizen"]
-input_data_categorical.drop("SeniorCitizen", axis =1, inplace = True)
-
-final_data = pd.concat([sc,numerical, input_data_categorical])
+final_data = pd.concat([numerical, input_data_categorical])
 
 if st.button('Predict'):
     prediction = model.predict(final_data)
